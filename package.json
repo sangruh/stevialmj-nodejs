@@ -1,0 +1,26 @@
+{
+  "name": "stevia-lumajang-standalone",
+  "version": "1.0.0",
+  "type": "module",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "node dist/index.js",
+    "build": "node build.sh"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.17.0",
+    "@trpc/client": "^11.6.0",
+    "@trpc/server": "^11.6.0",
+    "dotenv": "^17.2.2",
+    "drizzle-orm": "^0.44.5",
+    "express": "^4.21.2",
+    "mysql2": "^3.19.1",
+    "superjson": "^1.13.3",
+    "zod": "^4.1.12"
+  }
+}

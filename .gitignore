@@ -23,9 +23,8 @@ Thumbs.db
 *.swp
 *.swo
 
-# Build output (except public)
-dist/*
-!dist/public/
+# Build output
+dist/
 
 # Database
 *.db
@@ -33,8 +32,6 @@ sqlite.db
 
 # Upload packages
 *.zip
-plesk-mysql-upload-complete.zip
-node_modules-complete.zip
 
 # Test files
 test-*.js

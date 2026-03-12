@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Homepage -->
+  <url>
+    <loc>https://stevialmj.my.id/</loc>
+    <lastmod>2026-02-11T06:43:15.634Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Article List Page -->
+  <url>
+    <loc>https://stevialmj.my.id/artikel</loc>
+    <lastmod>2026-02-11T06:43:15.634Z</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Individual Articles -->
+  <url>
+    <loc>https://stevialmj.my.id/artikel/cara-menggunakan-stevia-tetes</loc>
+    <lastmod>2026-01-09T00:46:38.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stevialmj.my.id/artikel/diabetes-dan-pemanis-alami-solusi-hidup-sehat</loc>
+    <lastmod>2026-01-15T01:46:24.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stevialmj.my.id/artikel/gula-dan-penuaan-kulit-stevia-awet-muda</loc>
+    <lastmod>2026-01-28T05:05:05.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stevialmj.my.id/artikel/kisah-sukses-diet-13kg-dengan-stevia</loc>
+    <lastmod>2026-01-17T09:49:40.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stevialmj.my.id/artikel/manfaat-stevia-untuk-diet</loc>
+    <lastmod>2026-01-16T01:23:37.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stevialmj.my.id/artikel/stevia-untuk-anak-di-bawah-7-tahun</loc>
+    <lastmod>2026-01-21T01:26:56.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stevialmj.my.id/artikel/stevia-untuk-atlet-dan-fitness</loc>
+    <lastmod>2026-02-07T23:55:03.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stevialmj.my.id/artikel/stevia-untuk-ibu-hamil-dan-menyusui</loc>
+    <lastmod>2026-01-22T03:59:40.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stevialmj.my.id/artikel/stevia-untuk-lansia-hidup-sehat-di-usia-emas</loc>
+    <lastmod>2026-01-23T02:13:34.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stevialmj.my.id/artikel/stevia-untuk-produktivitas-kerja</loc>
+    <lastmod>2026-02-06T03:55:44.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://stevialmj.my.id/artikel/stevia-vs-gula-pasir</loc>
+    <lastmod>2026-01-16T01:33:01.000Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>

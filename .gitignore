@@ -23,15 +23,16 @@ Thumbs.db
 *.swp
 *.swo
 
-# Build output
-dist/
-build/
+# Build output (except public)
+dist/*
+!dist/public/
 
 # Database
 *.db
 sqlite.db
 
 # Upload packages
+*.zip
 plesk-mysql-upload-complete.zip
 node_modules-complete.zip
 

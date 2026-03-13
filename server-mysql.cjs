@@ -70,7 +70,13 @@ const articlesRouter = router({
       console.log('[DEBUG] DB connection obtained');
       const [rows] = await db.connection.execute('SELECT * FROM articles ORDER BY createdAt DESC');
       console.log('✅ [API] Fetched', rows.length, 'articles');
-      return rows;
+      // Convert Date objects to ISO strings
+      return rows.map(row => ({
+        ...row,
+        date: row.date instanceof Date ? row.date.toISOString().split('T')[0] : row.date,
+        createdAt: row.createdAt instanceof Date ? row.createdAt.toISOString() : row.createdAt,
+        updatedAt: row.updatedAt instanceof Date ? row.updatedAt.toISOString() : row.updatedAt
+      }));
     } catch (error) {
       console.error('❌ [API] articles.list ERROR:', error.message);
       console.error('Stack:', error.stack);
@@ -86,7 +92,14 @@ const articlesRouter = router({
         const db = await getDb();
         const [rows] = await db.connection.execute('SELECT * FROM articles WHERE id = ? LIMIT 1', [input.id]);
         if (!rows || rows.length === 0) throw new Error("Article not found");
-        return rows[0];
+        const row = rows[0];
+        // Convert Date objects to ISO strings
+        return {
+          ...row,
+          date: row.date instanceof Date ? row.date.toISOString().split('T')[0] : row.date,
+          createdAt: row.createdAt instanceof Date ? row.createdAt.toISOString() : row.createdAt,
+          updatedAt: row.updatedAt instanceof Date ? row.updatedAt.toISOString() : row.updatedAt
+        };
       } catch (error) {
         console.error('❌ [API] articles.getById ERROR:', error.message);
         throw error;
@@ -114,7 +127,11 @@ const articlesRouter = router({
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())`,
         [input.id, input.title, input.excerpt, input.content, input.author, dateValue, input.image, input.readTime, input.category || 'Tips Kesehatan', input.tags || null]
       );
-      return { success: true };
+      console.log('✅ [API] Created article:', input.id);
+      return { 
+        success: true, 
+        data: { ...input, date: dateValue }
+      };
     }),
 
   update: publicProcedure
@@ -138,7 +155,11 @@ const articlesRouter = router({
         `UPDATE articles SET title=?, excerpt=?, content=?, author=?, date=?, image=?, readTime=?, category=?, tags=?, updatedAt=NOW() WHERE id=?`,
         [data.title, data.excerpt, data.content, data.author, dateValue, data.image, data.readTime, data.category || 'Tips Kesehatan', data.tags || null, id]
       );
-      return { success: true };
+      console.log('✅ [API] Updated article:', id);
+      return { 
+        success: true, 
+        data: { id, ...data, date: dateValue }
+      };
     }),
 
   delete: publicProcedure

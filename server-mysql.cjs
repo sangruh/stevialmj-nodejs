@@ -70,12 +70,12 @@ const articlesRouter = router({
       console.log('[DEBUG] DB connection obtained');
       const [rows] = await db.connection.execute('SELECT * FROM articles ORDER BY createdAt DESC');
       console.log('✅ [API] Fetched', rows.length, 'articles');
-      // Convert Date objects to ISO strings
+      // Convert Date objects to ISO strings safely
       return rows.map(row => ({
         ...row,
-        date: row.date instanceof Date ? row.date.toISOString().split('T')[0] : row.date,
-        createdAt: row.createdAt instanceof Date ? row.createdAt.toISOString() : row.createdAt,
-        updatedAt: row.updatedAt instanceof Date ? row.updatedAt.toISOString() : row.updatedAt
+        date: (row.date instanceof Date && !isNaN(row.date)) ? row.date.toISOString().split('T')[0] : (row.date || ''),
+        createdAt: (row.createdAt instanceof Date && !isNaN(row.createdAt)) ? row.createdAt.toISOString() : (row.createdAt || ''),
+        updatedAt: (row.updatedAt instanceof Date && !isNaN(row.updatedAt)) ? row.updatedAt.toISOString() : (row.updatedAt || '')
       }));
     } catch (error) {
       console.error('❌ [API] articles.list ERROR:', error.message);
@@ -93,12 +93,12 @@ const articlesRouter = router({
         const [rows] = await db.connection.execute('SELECT * FROM articles WHERE id = ? LIMIT 1', [input.id]);
         if (!rows || rows.length === 0) throw new Error("Article not found");
         const row = rows[0];
-        // Convert Date objects to ISO strings
+        // Convert Date objects to ISO strings safely
         return {
           ...row,
-          date: row.date instanceof Date ? row.date.toISOString().split('T')[0] : row.date,
-          createdAt: row.createdAt instanceof Date ? row.createdAt.toISOString() : row.createdAt,
-          updatedAt: row.updatedAt instanceof Date ? row.updatedAt.toISOString() : row.updatedAt
+          date: (row.date instanceof Date && !isNaN(row.date)) ? row.date.toISOString().split('T')[0] : (row.date || ''),
+          createdAt: (row.createdAt instanceof Date && !isNaN(row.createdAt)) ? row.createdAt.toISOString() : (row.createdAt || ''),
+          updatedAt: (row.updatedAt instanceof Date && !isNaN(row.updatedAt)) ? row.updatedAt.toISOString() : (row.updatedAt || '')
         };
       } catch (error) {
         console.error('❌ [API] articles.getById ERROR:', error.message);

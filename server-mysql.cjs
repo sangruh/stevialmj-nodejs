@@ -95,34 +95,48 @@ const articlesRouter = router({
 
   create: publicProcedure
     .input(z.object({
-      id: z.string(), title: z.string(), excerpt: z.string(), content: z.string(),
-      author: z.string(), date: z.string(), image: z.string(), readTime: z.number(),
+      id: z.string(),
+      title: z.string(),
+      excerpt: z.string(),
+      content: z.string(),
+      author: z.string(),
+      date: z.string().nullable().optional(),
+      image: z.string(),
+      readTime: z.number(),
       category: z.enum(["Diabetes", "Diet & Nutrisi", "Resep Sehat", "Tips Kesehatan", "Testimoni"]).optional(),
-      tags: z.string().optional()
+      tags: z.string().nullable().optional()
     }))
     .mutation(async ({ input }) => {
       const db = await getDb();
+      const dateValue = input.date || new Date().toISOString().split('T')[0];
       await db.connection.execute(
         `INSERT INTO articles (id, title, excerpt, content, author, date, image, readTime, category, tags, createdAt, updatedAt)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())`,
-        [input.id, input.title, input.excerpt, input.content, input.author, input.date, input.image, input.readTime, input.category || 'Tips Kesehatan', input.tags || null]
+        [input.id, input.title, input.excerpt, input.content, input.author, dateValue, input.image, input.readTime, input.category || 'Tips Kesehatan', input.tags || null]
       );
       return { success: true };
     }),
 
   update: publicProcedure
     .input(z.object({
-      id: z.string(), title: z.string(), excerpt: z.string(), content: z.string(),
-      author: z.string(), date: z.string(), image: z.string(), readTime: z.number(),
+      id: z.string(),
+      title: z.string(),
+      excerpt: z.string(),
+      content: z.string(),
+      author: z.string(),
+      date: z.string().nullable().optional(),
+      image: z.string(),
+      readTime: z.number(),
       category: z.enum(["Diabetes", "Diet & Nutrisi", "Resep Sehat", "Tips Kesehatan", "Testimoni"]).optional(),
-      tags: z.string().optional()
+      tags: z.string().nullable().optional()
     }))
     .mutation(async ({ input }) => {
       const db = await getDb();
       const { id, ...data } = input;
+      const dateValue = data.date || new Date().toISOString().split('T')[0];
       await db.connection.execute(
         `UPDATE articles SET title=?, excerpt=?, content=?, author=?, date=?, image=?, readTime=?, category=?, tags=?, updatedAt=NOW() WHERE id=?`,
-        [data.title, data.excerpt, data.content, data.author, data.date, data.image, data.readTime, data.category || 'Tips Kesehatan', data.tags || null, id]
+        [data.title, data.excerpt, data.content, data.author, dateValue, data.image, data.readTime, data.category || 'Tips Kesehatan', data.tags || null, id]
       );
       return { success: true };
     }),

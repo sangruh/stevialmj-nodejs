@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>Stevia LMJ - Pemanis Alami Lumajang</title>
+    <meta name="description" content="Nikmati manisnya hidup sehat tanpa rasa bersalah dengan Stevia Lumajang. 100% Alami, 0 Kalori, dan Aman untuk Diabetes. Solusi tepat pengganti gula pasir. Coba sekarang!" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://stevialmj.my.id/" />
+    <meta property="og:title" content="Stevia LMJ - Pemanis Alami Lumajang" />
+    <meta property="og:description" content="Nikmati manisnya hidup sehat tanpa rasa bersalah dengan Stevia Lumajang. 100% Alami, 0 Kalori, dan Aman untuk Diabetes. Solusi tepat pengganti gula pasir. Coba sekarang!" />
+    <meta property="og:image" content="https://stevialmj.my.id/images/hero-stevia-lmj.webp" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://stevialmj.my.id/" />
+    <meta property="twitter:title" content="Stevia LMJ - Pemanis Alami Lumajang" />
+    <meta property="twitter:description" content="Nikmati manisnya hidup sehat tanpa rasa bersalah dengan Stevia Lumajang. 100% Alami, 0 Kalori, dan Aman untuk Diabetes. Solusi tepat pengganti gula pasir. Coba sekarang!" />
+    <meta property="twitter:image" content="https://stevialmj.my.id/images/hero-stevia-lmj.webp" />
+    <link rel="icon" type="image/webp" href="/images/logo-stevia-lmj.webp" />    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X1KE285ESR"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-X1KE285ESR');
+    </script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Umami Analytics (only load if env vars are set)
+      const analyticsEndpoint = "%VITE_ANALYTICS_ENDPOINT%";
+      const analyticsWebsiteId = "%VITE_ANALYTICS_WEBSITE_ID%";
+      if (analyticsEndpoint && analyticsWebsiteId && analyticsEndpoint !== "%" + "VITE_ANALYTICS_ENDPOINT" + "%") {
+        const script = document.createElement("script");
+        script.defer = true;
+        script.src = `${analyticsEndpoint}/umami`;
+        script.dataset.websiteId = analyticsWebsiteId;
+        document.body.appendChild(script);
+      }
+    </script>
+  </body>
+
+</html>

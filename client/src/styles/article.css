@@ -1,0 +1,281 @@
+/* Medium-Style Article CSS */
+
+/* Base Article Container */
+.article-container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 60px 24px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  color: rgba(0, 0, 0, 0.84);
+  background: #fff;
+}
+
+/* Typography - Headers */
+.article-container h1 {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.022em;
+  margin: 32px 0 8px;
+  color: rgba(0, 0, 0, 0.92);
+  font-family: 'Georgia', 'Cambria', 'Times New Roman', serif;
+}
+
+.article-container h2 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.019em;
+  margin: 56px 0 -8px;
+  color: rgba(0, 0, 0, 0.92);
+  font-family: 'Georgia', 'Cambria', 'Times New Roman', serif;
+}
+
+.article-container h3 {
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.016em;
+  margin: 40px 0 -4px;
+  color: rgba(0, 0, 0, 0.88);
+  font-family: 'Georgia', 'Cambria', 'Times New Roman', serif;
+}
+
+.article-container h4 {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.012em;
+  margin: 32px 0 -4px;
+  color: rgba(0, 0, 0, 0.88);
+  font-family: 'Georgia', 'Cambria', 'Times New Roman', serif;
+}
+
+/* Paragraphs */
+.article-container p {
+  font-size: 21px;
+  line-height: 1.58;
+  letter-spacing: -0.003em;
+  margin: 0 0 30px;
+  color: rgba(0, 0, 0, 0.84);
+  font-family: 'Georgia', 'Cambria', 'Times New Roman', serif;
+}
+
+/* First paragraph after heading - drop cap effect (optional) */
+.article-container h1 + p::first-letter,
+.article-container h2 + p::first-letter {
+  font-size: 62px;
+  line-height: 1;
+  float: left;
+  margin: 0 7px 0 0;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.92);
+}
+
+/* Links */
+.article-container a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 0, 0, 0.3);
+  text-underline-offset: 2px;
+  transition: text-decoration-color 0.2s;
+}
+
+.article-container a:hover {
+  text-decoration-color: rgba(0, 0, 0, 0.84);
+}
+
+/* Strong/Bold */
+.article-container strong {
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.92);
+}
+
+/* Emphasis/Italic */
+.article-container em {
+  font-style: italic;
+}
+
+/* Lists */
+.article-container ul,
+.article-container ol {
+  margin: 30px 0;
+  padding-left: 30px;
+}
+
+.article-container li {
+  font-size: 21px;
+  line-height: 1.58;
+  letter-spacing: -0.003em;
+  margin-bottom: 14px;
+  color: rgba(0, 0, 0, 0.84);
+  font-family: 'Georgia', 'Cambria', 'Times New Roman', serif;
+}
+
+.article-container ul li {
+  list-style-type: disc;
+}
+
+.article-container ol li {
+  list-style-type: decimal;
+}
+
+/* Nested lists */
+.article-container li ul,
+.article-container li ol {
+  margin: 14px 0 0;
+}
+
+/* Blockquotes */
+.article-container blockquote {
+  margin: 40px 0;
+  padding: 0 0 0 32px;
+  border-left: 4px solid rgba(0, 0, 0, 0.84);
+  font-style: italic;
+  font-size: 24px;
+  line-height: 1.48;
+  letter-spacing: -0.014em;
+  color: rgba(0, 0, 0, 0.68);
+  font-family: 'Georgia', 'Cambria', 'Times New Roman', serif;
+}
+
+.article-container blockquote p {
+  font-size: inherit;
+  line-height: inherit;
+  margin-bottom: 0;
+}
+
+/* Horizontal Rule */
+.article-container hr {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+  margin: 56px 0;
+}
+
+/* Images */
+.article-container img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 48px auto;
+  border-radius: 4px;
+}
+
+/* Figure captions */
+.article-container figure {
+  margin: 48px 0;
+}
+
+.article-container figcaption {
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.4;
+  color: rgba(0, 0, 0, 0.54);
+  margin-top: 12px;
+  font-style: italic;
+}
+
+/* Code blocks */
+.article-container code {
+  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+  font-size: 18px;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 3px 6px;
+  border-radius: 3px;
+  color: rgba(0, 0, 0, 0.84);
+}
+
+.article-container pre {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 30px 0;
+}
+
+.article-container pre code {
+  background: transparent;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Tables */
+.article-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 40px 0;
+  font-size: 18px;
+}
+
+.article-container th,
+.article-container td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.article-container th {
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.03);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .article-container {
+    padding: 40px 16px;
+  }
+  
+  .article-container h1 {
+    font-size: 34px;
+  }
+  
+  .article-container h2 {
+    font-size: 28px;
+  }
+  
+  .article-container h3 {
+    font-size: 22px;
+  }
+  
+  .article-container h4 {
+    font-size: 20px;
+  }
+  
+  .article-container p,
+  .article-container li {
+    font-size: 19px;
+  }
+  
+  .article-container blockquote {
+    font-size: 21px;
+    padding-left: 20px;
+  }
+  
+  .article-container img {
+    margin: 32px auto;
+  }
+}
+
+/* Reading progress bar (optional enhancement) */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: rgba(0, 0, 0, 0.84);
+  z-index: 1000;
+  transition: width 0.1s ease-out;
+}
+
+/* Selection styling */
+.article-container ::selection {
+  background: rgba(0, 168, 133, 0.25);
+}
+
+/* Focus states for accessibility */
+.article-container a:focus {
+  outline: 2px solid rgba(0, 168, 133, 0.8);
+  outline-offset: 2px;
+}

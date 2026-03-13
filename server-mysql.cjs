@@ -13,6 +13,11 @@ let _db = null;
 async function getDb() {
   if (!_db) {
     try {
+      console.log('[DEBUG] Attempting MySQL connection...');
+      console.log('[DEBUG] DB_HOST:', process.env.DB_HOST || 'localhost');
+      console.log('[DEBUG] DB_USER:', process.env.DB_USER || '(not set)');
+      console.log('[DEBUG] DB_NAME:', process.env.DB_NAME || '(not set)');
+      
       // MySQL connection configuration
       const connection = await mysql.createConnection({
         host: process.env.DB_HOST || 'localhost',
@@ -27,22 +32,24 @@ async function getDb() {
 
       await connection.ping();
       console.log('✅ [MySQL] Connected to', process.env.DB_NAME, '@', process.env.DB_HOST);
-      
+
       _db = { type: 'mysql', connection };
-      
+
       process.on('SIGTERM', async () => {
         console.log('[MySQL] Closing connection...');
         await connection.end();
       });
-      
+
     } catch (error) {
       console.error('❌ [MySQL] Connection FAILED!');
       console.error('Error:', error.message);
+      console.error('Stack:', error.stack);
       console.error('');
       console.error('Please check:');
       console.error('1. Database exists in Plesk');
       console.error('2. Username/password correct');
       console.error('3. MySQL service running');
+      console.error('4. Environment variables set in Plesk Node.js panel');
       throw error;
     }
   }
@@ -57,19 +64,33 @@ const publicProcedure = t.procedure;
 // Articles router
 const articlesRouter = router({
   list: publicProcedure.query(async () => {
-    const db = await getDb();
-    const [rows] = await db.connection.execute('SELECT * FROM articles ORDER BY createdAt DESC');
-    console.log('✅ [API] Fetched', rows.length, 'articles');
-    return rows;
+    console.log('[DEBUG] articles.list called');
+    try {
+      const db = await getDb();
+      console.log('[DEBUG] DB connection obtained');
+      const [rows] = await db.connection.execute('SELECT * FROM articles ORDER BY createdAt DESC');
+      console.log('✅ [API] Fetched', rows.length, 'articles');
+      return rows;
+    } catch (error) {
+      console.error('❌ [API] articles.list ERROR:', error.message);
+      console.error('Stack:', error.stack);
+      throw error;
+    }
   }),
 
   getById: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ input }) => {
-      const db = await getDb();
-      const [rows] = await db.connection.execute('SELECT * FROM articles WHERE id = ? LIMIT 1', [input.id]);
-      if (!rows || rows.length === 0) throw new Error("Article not found");
-      return rows[0];
+      console.log('[DEBUG] articles.getById called with id:', input.id);
+      try {
+        const db = await getDb();
+        const [rows] = await db.connection.execute('SELECT * FROM articles WHERE id = ? LIMIT 1', [input.id]);
+        if (!rows || rows.length === 0) throw new Error("Article not found");
+        return rows[0];
+      } catch (error) {
+        console.error('❌ [API] articles.getById ERROR:', error.message);
+        throw error;
+      }
     }),
 
   create: publicProcedure
@@ -125,7 +146,26 @@ const server = http.createServer(app);
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-app.use('/api/trpc', createExpressMiddleware({ router: appRouter, createContext: () => ({}) }));
+// Logging middleware for API requests
+app.use('/api/trpc', (req, res, next) => {
+  console.log('[DEBUG] API Request:', req.method, req.path);
+  console.log('[DEBUG] Query:', req.query);
+  console.log('[DEBUG] Body:', req.body);
+  next();
+});
+
+app.use('/api/trpc', createExpressMiddleware({ 
+  router: appRouter, 
+  createContext: () => ({}),
+  onError: ({ error, path, input, req }) => {
+    console.error('❌ [tRPC ERROR]', {
+      error: error.message,
+      path,
+      input,
+      url: req?.url
+    });
+  }
+}));
 app.use(express.static('public'));
 app.use('*', (_, res) => res.sendFile('index.html', { root: 'public' }));
 
@@ -133,5 +173,6 @@ app.use('*', (_, res) => res.sendFile('index.html', { root: 'public' }));
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`✅ Server running on http://localhost:${PORT}/`);
-  console.log(`📊 Database: MySQL (${process.env.DB_NAME})`);
+  console.log(`📊 Database: MySQL (${process.env.DB_NAME || 'NOT SET'})`);
+  console.log(`🔍 Environment: ${process.env.NODE_ENV || 'development'}`);
 });

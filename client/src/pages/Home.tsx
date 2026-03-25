@@ -607,6 +607,173 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Kegiatan Section */}
+        <section id="kegiatan" className="py-24 bg-white relative">
+          <div className="container mx-auto px-4">
+            <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/30 text-primary-foreground font-medium text-sm border border-secondary">
+                <Leaf size={16} className="text-primary" />
+                <span className="text-primary">Kegiatan Kami</span>
+              </div>
+              <h2 className="font-display font-bold text-3xl md:text-4xl text-foreground">Aktivitas Stevia LMJ</h2>
+              <p className="text-muted-foreground text-lg">Berbagai kegiatan positif kami untuk masyarakat Lumajang.</p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              {/* Kegiatan 1 - CFD */}
+              <Card className="overflow-hidden border-border shadow-lg hover:shadow-xl transition-all duration-300 group">
+                <div className="h-48 overflow-hidden bg-secondary/5 relative">
+                  <img
+                    src="/images/gallery/activity-1.webp"
+                    alt="Car Free Day Lumajang"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                  <div className="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">
+                    Rutin
+                  </div>
+                </div>
+                <CardContent className="p-4 space-y-2">
+                  <h3 className="font-display font-bold text-lg text-foreground">Car Free Day (CFD) Lumajang</h3>
+                  <p className="text-muted-foreground text-sm">
+                    Setiap minggu pagi di alun-alun Lumajang. Konsultasi kesehatan gratis dan produk Stevia.
+                  </p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span className="flex items-center gap-1">
+                      <Check className="w-3 h-3 text-green-500" /> Cek Kesehatan Gratis
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Kegiatan 2 - Home Care */}
+              <Card className="overflow-hidden border-border shadow-lg hover:shadow-xl transition-all duration-300 group">
+                <div className="h-48 overflow-hidden bg-secondary/5 relative">
+                  <img
+                    src="/images/gallery/activity-2.webp"
+                    alt="Layanan Home Care"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                  <div className="absolute top-4 right-4 bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                    Populer
+                  </div>
+                </div>
+                <CardContent className="p-4 space-y-2">
+                  <h3 className="font-display font-bold text-lg text-foreground">Layanan Home Care</h3>
+                  <p className="text-muted-foreground text-sm">
+                    Kunjungan ke rumah untuk cek kesehatan dan konsultasi produk Stevia langsung di tempat Anda.
+                  </p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span className="flex items-center gap-1">
+                      <Check className="w-3 h-3 text-green-500" /> Praktis & Nyaman
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Kegiatan 3 - Community Event */}
+              <Card className="overflow-hidden border-border shadow-lg hover:shadow-xl transition-all duration-300 group">
+                <div className="h-48 overflow-hidden bg-secondary/5 relative">
+                  <img
+                    src="/images/gallery/activity-3.webp"
+                    alt="Kegiatan Komunitas"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                  <div className="absolute top-4 right-4 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                    Komunitas
+                  </div>
+                </div>
+                <CardContent className="p-4 space-y-2">
+                  <h3 className="font-display font-bold text-lg text-foreground">Kegiatan Komunitas</h3>
+                  <p className="text-muted-foreground text-sm">
+                    Penyuluhan kesehatan, senam bersama, dan berbagi inspirasi hidup sehat untuk masyarakat.
+                  </p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span className="flex items-center gap-1">
+                      <Check className="w-3 h-3 text-green-500" /> Edukasi Sehat
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Kegiatan 4 - Health Check */}
+              <Card className="overflow-hidden border-border shadow-lg hover:shadow-xl transition-all duration-300 group">
+                <div className="h-48 overflow-hidden bg-secondary/5 relative">
+                  <img
+                    src="/images/gallery/activity-4.webp"
+                    alt="Cek Kesehatan"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                </div>
+                <CardContent className="p-4 space-y-2">
+                  <h3 className="font-display font-bold text-lg text-foreground">Cek Kesehatan Lengkap</h3>
+                  <p className="text-muted-foreground text-sm">
+                    Pemeriksaan gula darah, kolesterol, dan asam urat dengan teknologi terkini.
+                  </p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span className="flex items-center gap-1">
+                      <Check className="w-3 h-3 text-green-500" /> Hasil Akurat
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Kegiatan 5 - Product Demo */}
+              <Card className="overflow-hidden border-border shadow-lg hover:shadow-xl transition-all duration-300 group">
+                <div className="h-48 overflow-hidden bg-secondary/5 relative">
+                  <img
+                    src="/images/gallery/activity-5.webp"
+                    alt="Demo Produk"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                  <div className="absolute top-4 right-4 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                    Interaktif
+                  </div>
+                </div>
+                <CardContent className="p-4 space-y-2">
+                  <h3 className="font-display font-bold text-lg text-foreground">Demo Produk Stevia</h3>
+                  <p className="text-muted-foreground text-sm">
+                    Coba langsung produk Stevia LMJ dalam berbagai minuman dan makanan sehat.
+                  </p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span className="flex items-center gap-1">
+                      <Check className="w-3 h-3 text-green-500" /> Gratis Sampling
+                    </span>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Kegiatan 6 - Join Us CTA */}
+              <Card className="overflow-hidden border-2 border-primary/30 shadow-lg hover:shadow-xl transition-all duration-300 group bg-primary/5">
+                <div className="h-48 overflow-hidden bg-primary/10 relative flex items-center justify-center">
+                  <div className="text-center p-6">
+                    <Leaf className="w-16 h-16 text-primary mx-auto mb-4" />
+                    <h3 className="font-display font-bold text-xl text-primary">Mari Bergabung!</h3>
+                  </div>
+                </div>
+                <CardContent className="p-4 space-y-3 text-center">
+                  <p className="text-muted-foreground text-sm">
+                    Ikuti kegiatan kami dan dapatkan inspirasi hidup sehat bersama komunitas Stevia LMJ.
+                  </p>
+                  <Button 
+                    className="w-full bg-primary hover:bg-primary/90 text-white font-bold"
+                    onClick={() => {
+                      trackEvent('Lead');
+                      window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20tertarik%20ikut%20kegiatan%20Anda', '_blank');
+                    }}
+                  >
+                    Gabung Komunitas
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
         {/* Health Check Services Section */}
         <section className="py-16 bg-secondary/5">
           <div className="container mx-auto px-4">

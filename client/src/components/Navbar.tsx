@@ -79,6 +79,7 @@ export default function Navbar() {
           <a href="/#about" onClick={(e) => handleNavClick(e, "#about")} className="text-foreground/80 hover:text-primary transition-colors font-body">Tentang</a>
           <a href="/#benefits" onClick={(e) => handleNavClick(e, "#benefits")} className="text-foreground/80 hover:text-primary transition-colors font-body">Manfaat</a>
           <a href="/#products" onClick={(e) => handleNavClick(e, "#products")} className="text-foreground/80 hover:text-primary transition-colors font-body">Produk</a>
+          <a href="/#kegiatan" onClick={(e) => handleNavClick(e, "#kegiatan")} className="text-foreground/80 hover:text-primary transition-colors font-body">Kegiatan</a>
           <a href="/#contact" onClick={(e) => handleNavClick(e, "#contact")} className="text-foreground/80 hover:text-primary transition-colors font-body">Kontak</a>
           <Link href="/artikel" className={`text-foreground/80 hover:text-primary transition-colors font-body ${location.startsWith('/artikel') ? 'text-primary font-bold' : ''}`}>Artikel</Link>
           
@@ -131,6 +132,7 @@ export default function Navbar() {
           <a href="/#about" onClick={(e) => handleNavClick(e, "#about")} className="text-foreground/80 hover:text-primary py-2 border-b border-border/50">Tentang</a>
           <a href="/#benefits" onClick={(e) => handleNavClick(e, "#benefits")} className="text-foreground/80 hover:text-primary py-2 border-b border-border/50">Manfaat</a>
           <a href="/#products" onClick={(e) => handleNavClick(e, "#products")} className="text-foreground/80 hover:text-primary py-2 border-b border-border/50">Produk</a>
+          <a href="/#kegiatan" onClick={(e) => handleNavClick(e, "#kegiatan")} className="text-foreground/80 hover:text-primary py-2 border-b border-border/50">Kegiatan</a>
           <a href="/#contact" onClick={(e) => handleNavClick(e, "#contact")} className="text-foreground/80 hover:text-primary py-2 border-b border-border/50">Kontak</a>
           <Link href="/artikel" onClick={() => setIsOpen(false)} className={`text-foreground/80 hover:text-primary py-2 border-b border-border/50 ${location.startsWith('/artikel') ? 'text-primary font-bold' : ''}`}>Artikel</Link>
           

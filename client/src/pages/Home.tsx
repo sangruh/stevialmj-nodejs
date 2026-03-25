@@ -478,9 +478,9 @@ export default function Home() {
               {/* Product 3 */}
               <Card className="overflow-hidden border-border shadow-lg hover:shadow-xl transition-all duration-300 group">
                 <div className="h-64 overflow-hidden bg-secondary/5 relative">
-                  <img 
-                    src="/images/hero-stevia-lmj.webp" 
-                    alt="Stevia Tetes 12gr" 
+                  <img
+                    src="/images/stevia12g.webp"
+                    alt="Stevia Tetes 12gr"
                     className="w-full h-full object-contain p-6 group-hover:scale-110 transition-transform duration-500"
                     loading="lazy"
                   />

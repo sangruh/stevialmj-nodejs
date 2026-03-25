@@ -12,11 +12,35 @@ import HallOfFame from "@/components/HallOfFame";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { useState } from "react";
 
+// Meta Pixel initialization
+declare global {
+  interface Window {
+    fbq: any;
+  }
+}
+
 export default function Home() {
   const [location] = useLocation();
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [promoPopupOpen, setPromoPopupOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // Meta Pixel Event Helper
+  const trackEvent = (eventName: string, params?: any) => {
+    if (typeof window !== 'undefined' && window.fbq) {
+      window.fbq('track', eventName, params);
+    }
+  };
+
+  const handleWhatsAppClick = (productName: string, price?: string) => {
+    trackEvent('InitiateCheckout', {
+      content_name: productName,
+      content_category: 'Stevia Product',
+      value: price ? parseFloat(price.replace(/[^0-9]/g, '')) / 1000 : undefined,
+      currency: 'IDR',
+      content_ids: [productName.toLowerCase().replace(/\s+/g, '-')]
+    });
+  };
 
   const galleryImages = [
     "/images/gallery/activity-1.webp",
@@ -93,7 +117,10 @@ export default function Home() {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-12 text-lg shadow-lg hover:shadow-xl transition-all" onClick={() => window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20ingin%20pesan%20produknya', '_blank')}>
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-12 text-lg shadow-lg hover:shadow-xl transition-all" onClick={() => {
+                  handleWhatsAppClick('Stevia Product', 'Rp 25.000');
+                  window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20ingin%20pesan%20produknya', '_blank');
+                }}>
                   Beli Sekarang
                 </Button>
                 <Link href="/artikel">
@@ -362,7 +389,10 @@ export default function Home() {
               Kunjungi kami langsung di alamat toko, temui kami di <strong>Car Free Day (CFD) Lumajang</strong>, atau manfaatkan layanan <strong>Home Care</strong> kami ke rumah Anda.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <Button size="lg" variant="secondary" className="rounded-full px-8 h-12 text-lg font-bold text-primary hover:bg-white" onClick={() => window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20ingin%20tanya-tanya%20dulu', '_blank')}>
+              <Button size="lg" variant="secondary" className="rounded-full px-8 h-12 text-lg font-bold text-primary hover:bg-white" onClick={() => {
+                trackEvent('Lead');
+                window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20ingin%20tanya-tanya%20dulu', '_blank');
+              }}>
                 Hubungi via WhatsApp
               </Button>
               <Button size="lg" variant="outline" className="bg-transparent border-white text-white hover:bg-white/10 rounded-full px-8 h-12 text-lg" onClick={() => window.open('https://maps.app.goo.gl/BDJpWE9tkeoQhL1u8', '_blank')}>
@@ -429,7 +459,10 @@ export default function Home() {
                       <Check className="w-4 h-4 text-green-500" /> Praktis & Higienis
                     </li>
                   </ul>
-                  <Button className="w-full bg-primary hover:bg-primary/90 text-white font-bold" onClick={() => window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20mau%20pesan%20Stevia%20Tetes%203gr', '_blank')}>
+                  <Button className="w-full bg-primary hover:bg-primary/90 text-white font-bold" onClick={() => {
+                    handleWhatsAppClick('Stevia Tetes 3gr', 'Rp 25.000');
+                    window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20mau%20pesan%20Stevia%20Tetes%203gr', '_blank');
+                  }}>
                     Pesan Sekarang
                   </Button>
                 </CardContent>
@@ -469,7 +502,10 @@ export default function Home() {
                       <Check className="w-4 h-4 text-green-500" /> Lebih Hemat
                     </li>
                   </ul>
-                  <Button className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-12 text-lg" onClick={() => window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20mau%20pesan%20Stevia%20Tetes%206gr', '_blank')}>
+                  <Button className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-12 text-lg" onClick={() => {
+                    handleWhatsAppClick('Stevia Tetes 6gr', 'Rp 35.000');
+                    window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20mau%20pesan%20Stevia%20Tetes%206gr', '_blank');
+                  }}>
                     Pesan Sekarang
                   </Button>
                 </CardContent>
@@ -508,7 +544,10 @@ export default function Home() {
                       <Check className="w-4 h-4 text-green-500" /> Hemat & Praktis
                     </li>
                   </ul>
-                  <Button className="w-full bg-primary hover:bg-primary/90 text-white font-bold" onClick={() => window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20mau%20pesan%20Stevia%20Tetes%2012gr', '_blank')}>
+                  <Button className="w-full bg-primary hover:bg-primary/90 text-white font-bold" onClick={() => {
+                    handleWhatsAppClick('Stevia Tetes 12gr', 'Rp 49.000');
+                    window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20mau%20pesan%20Stevia%20Tetes%2012gr', '_blank');
+                  }}>
                     Pesan Sekarang
                   </Button>
                 </CardContent>
@@ -543,7 +582,10 @@ export default function Home() {
                       <Check className="w-4 h-4 text-green-500" /> Min. Order 20 Botol
                     </li>
                   </ul>
-                  <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary/5 font-bold" onClick={() => window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20tertarik%20jadi%20Reseller', '_blank')}>
+                  <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary/5 font-bold" onClick={() => {
+                    handleWhatsAppClick('Paket Reseller');
+                    window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20tertarik%20jadi%20Reseller', '_blank');
+                  }}>
                     Gabung Mitra
                   </Button>
                 </CardContent>
@@ -636,7 +678,10 @@ export default function Home() {
             </div>
             
             <div className="mt-8 text-center">
-              <Button className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 font-bold" onClick={() => window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20mau%20booking%20cek%20kesehatan', '_blank')}>
+              <Button className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 font-bold" onClick={() => {
+                trackEvent('Lead');
+                window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20mau%20booking%20cek%20kesehatan', '_blank');
+              }}>
                 Booking Jadwal Cek Kesehatan
               </Button>
             </div>
@@ -685,7 +730,10 @@ export default function Home() {
             <p className="text-xl text-white/90 max-w-2xl mx-auto">
               Bergabunglah dengan ribuan keluarga Indonesia yang telah beralih ke pemanis alami yang lebih sehat.
             </p>
-            <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-gray-100 font-bold text-lg px-10 h-14 rounded-full shadow-xl" onClick={() => window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20siap%20hidup%20sehat', '_blank')}>
+            <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-gray-100 font-bold text-lg px-10 h-14 rounded-full shadow-xl" onClick={() => {
+              handleWhatsAppClick('Stevia Product', 'Rp 35.000');
+              window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20siap%20hidup%20sehat', '_blank');
+            }}>
               Pesan Sekarang via WhatsApp <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
           </div>

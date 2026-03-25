@@ -5,6 +5,23 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
+// Meta Pixel initialization
+declare global {
+  interface Window {
+    fbq: any;
+  }
+}
+
+const trackPromoClick = () => {
+  if (typeof window !== 'undefined' && window.fbq) {
+    window.fbq('track', 'InitiateCheckout', {
+      content_name: 'Promo Discount 10%',
+      content_category: 'Promo',
+      currency: 'IDR'
+    });
+  }
+};
+
 interface PromoPopupProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
@@ -95,9 +112,10 @@ export default function PromoPopup({ isOpen, onOpenChange }: PromoPopupProps) {
               </Button>
             </div>
             
-            <Button 
+            <Button
               className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-6 text-lg rounded-xl"
               onClick={() => {
+                trackPromoClick();
                 const message = `Halo Stevia Lumajang, saya mau klaim promo kode: 2026SEHATMANIS.%0A%0ANama: ${formData.name}%0ANo HP: ${formData.phone}`;
                 window.open(`https://wa.me/6281249356066?text=${message}`, '_blank');
                 onOpenChange(false);

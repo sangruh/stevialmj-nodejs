@@ -1,14 +1,21 @@
 import { MessageCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 
+// Meta Pixel initialization
+declare global {
+  interface Window {
+    fbq: any;
+  }
+}
+
 interface WhatsAppButtonProps {
   phoneNumber?: string;
   message?: string;
 }
 
-export default function WhatsAppButton({ 
-  phoneNumber = "6281249356066", 
-  message = "Halo Stevia Lumajang, saya ingin bertanya tentang produk Anda" 
+export default function WhatsAppButton({
+  phoneNumber = "6281249356066",
+  message = "Halo Stevia Lumajang, saya ingin bertanya tentang produk Anda"
 }: WhatsAppButtonProps) {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -22,6 +29,14 @@ export default function WhatsAppButton({
   }, []);
 
   const handleClick = () => {
+    // Track with Meta Pixel
+    if (typeof window !== 'undefined' && window.fbq) {
+      window.fbq('track', 'Contact', {
+        content_name: 'WhatsApp Floating Button',
+        content_category: 'Customer Support',
+        currency: 'IDR'
+      });
+    }
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
     window.open(whatsappUrl, '_blank');

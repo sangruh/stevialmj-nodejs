@@ -4,6 +4,23 @@ import { Menu, X, LogIn, LogOut, User } from "lucide-react";
 import { useState } from "react";
 import LoginModal from "@/components/LoginModal";
 import { useAuth } from "@/contexts/AuthContext";
+
+// Meta Pixel initialization
+declare global {
+  interface Window {
+    fbq: any;
+  }
+}
+
+const trackWhatsAppClick = (productName: string) => {
+  if (typeof window !== 'undefined' && window.fbq) {
+    window.fbq('track', 'InitiateCheckout', {
+      content_name: productName,
+      content_category: 'Stevia Product',
+      currency: 'IDR'
+    });
+  }
+};
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,6 +37,11 @@ export default function Navbar() {
   const [location] = useLocation();
 
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  const handleWhatsAppClick = () => {
+    trackWhatsAppClick('Stevia Product');
+    window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20ingin%20pesan%20produknya', '_blank');
+  };
 
   // Helper function to handle navigation
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, hash: string) => {
@@ -90,7 +112,7 @@ export default function Navbar() {
             </Button>
           )}
           
-          <Button className="bg-primary hover:bg-primary/90 text-white rounded-full px-6 font-body" onClick={() => window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20ingin%20pesan%20produknya', '_blank')}>
+          <Button className="bg-primary hover:bg-primary/90 text-white rounded-full px-6 font-body" onClick={handleWhatsAppClick}>
             Pesan Sekarang
           </Button>
         </div>
@@ -147,7 +169,10 @@ export default function Navbar() {
             </Button>
           )}
           
-          <Button className="w-full bg-primary hover:bg-primary/90 text-white rounded-full mt-2" onClick={() => window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20ingin%20pesan%20produknya', '_blank')}>
+          <Button className="w-full bg-primary hover:bg-primary/90 text-white rounded-full mt-2" onClick={() => {
+            trackWhatsAppClick('Stevia Product');
+            window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20ingin%20pesan%20produknya', '_blank');
+          }}>
             Pesan Sekarang
           </Button>
         </div>

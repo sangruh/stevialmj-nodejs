@@ -390,7 +390,7 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <Button size="lg" variant="secondary" className="rounded-full px-8 h-12 text-lg font-bold text-primary hover:bg-white" onClick={() => {
-                trackEvent('Lead');
+                handleWhatsAppClick('Inquiry - Tanya-tanya');
                 window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20ingin%20tanya-tanya%20dulu', '_blank');
               }}>
                 Hubungi via WhatsApp
@@ -759,10 +759,10 @@ export default function Home() {
                   <p className="text-muted-foreground text-sm">
                     Ikuti kegiatan kami dan dapatkan inspirasi hidup sehat bersama komunitas Stevia LMJ.
                   </p>
-                  <Button 
+                  <Button
                     className="w-full bg-primary hover:bg-primary/90 text-white font-bold"
                     onClick={() => {
-                      trackEvent('Lead');
+                      handleWhatsAppClick('Gabung Komunitas - Kegiatan');
                       window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20tertarik%20ikut%20kegiatan%20Anda', '_blank');
                     }}
                   >
@@ -846,7 +846,7 @@ export default function Home() {
             
             <div className="mt-8 text-center">
               <Button className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 font-bold" onClick={() => {
-                trackEvent('Lead');
+                handleWhatsAppClick('Booking Cek Kesehatan');
                 window.open('https://wa.me/6281249356066?text=Halo%20Stevia%20Lumajang,%20saya%20mau%20booking%20cek%20kesehatan', '_blank');
               }}>
                 Booking Jadwal Cek Kesehatan

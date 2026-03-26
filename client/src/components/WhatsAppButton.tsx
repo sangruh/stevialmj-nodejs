@@ -29,9 +29,9 @@ export default function WhatsAppButton({
   }, []);
 
   const handleClick = () => {
-    // Track with Meta Pixel
+    // Track with Meta Pixel - InitiateCheckout for all WhatsApp clicks
     if (typeof window !== 'undefined' && window.fbq) {
-      window.fbq('track', 'Contact', {
+      window.fbq('track', 'InitiateCheckout', {
         content_name: 'WhatsApp Floating Button',
         content_category: 'Customer Support',
         currency: 'IDR'

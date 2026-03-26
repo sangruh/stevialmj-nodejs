@@ -60,8 +60,6 @@
     <!-- Meta Pixel WhatsApp Tracking - InitiateCheckout ONLY -->
     <script>
       function trackWhatsAppClick(e) {
-        console.log('[DEBUG] Click detected on:', e.target.tagName, e.target);
-        
         var el = e.target;
         
         // Find closest A or BUTTON (max 5 levels up)
@@ -70,81 +68,71 @@
           el = el.parentElement;
         }
         
-        if (!el) {
-          console.log('[DEBUG] No A or BUTTON found');
-          return;
-        }
-        
-        console.log('[DEBUG] Found element:', el.tagName, el);
+        if (!el) return;
         
         // Get href or onclick
         var href = el.href || '';
-        var onClick = el.onclick ? el.onclick.toString() : '';
         var fullText = (el.textContent || el.innerText || '').toLowerCase();
         
-        console.log('[DEBUG] href:', href);
-        console.log('[DEBUG] onClick:', onClick.substring(0, 100));
-        console.log('[DEBUG] text:', fullText.substring(0, 50));
-        
-        // Check if WhatsApp link
+        // Check if WhatsApp link - detect from href OR button text
         var isWA = href.indexOf('wa.me') > -1 || 
-                   href.indexOf('whatsapp.com') > -1 ||
-                   onClick.indexOf('wa.me') > -1;
+                   href.indexOf('whatsapp.com') > -1;
         
-        console.log('[DEBUG] isWhatsApp:', isWA);
+        // If not from href, check if button text indicates WhatsApp action
+        var isWhatsAppButton = fullText.indexOf('pesan') > -1 || 
+                               fullText.indexOf('beli') > -1 ||
+                               fullText.indexOf('hubungi') > -1 ||
+                               fullText.indexOf('pesan sekarang') > -1 ||
+                               fullText.indexOf('reseller') > -1 ||
+                               fullText.indexOf('komunitas') > -1 ||
+                               fullText.indexOf('kesehatan') > -1;
         
-        if (!isWA) {
-          console.log('[DEBUG] Not a WhatsApp link, skipping');
-          return;
+        // If it's a button with WhatsApp-like text, treat it as WhatsApp
+        if (el.tagName === 'BUTTON' && isWhatsAppButton && !isWA) {
+          isWA = true;
         }
+        
+        if (!isWA) return;
         
         // Prevent default to control timing
         if (e.cancelable) {
           e.preventDefault();
-          console.log('[DEBUG] preventDefault called');
         }
         
-        // Detect product
+        // Detect product from text
         var product = 'WhatsApp Inquiry';
         if (fullText.indexOf('3gr') > -1) product = 'Stevia Tetes 3gr';
         else if (fullText.indexOf('6gr') > -1) product = 'Stevia Tetes 6gr';
         else if (fullText.indexOf('12gr') > -1) product = 'Stevia Tetes 12gr';
-        else if (fullText.indexOf('reseller') > -1) product = 'Paket Reseller';
-        else if (fullText.indexOf('komunitas') > -1) product = 'Gabung Komunitas';
-        else if (fullText.indexOf('kesehatan') > -1) product = 'Booking Cek Kesehatan';
+        else if (fullText.indexOf('reseller') > -1 || fullText.indexOf('mitra') > -1) product = 'Paket Reseller';
+        else if (fullText.indexOf('komunitas') > -1 || fullText.indexOf('kegiatan') > -1) product = 'Gabung Komunitas';
+        else if (fullText.indexOf('kesehatan') > -1 || fullText.indexOf('booking') > -1) product = 'Booking Cek Kesehatan';
         else if (fullText.indexOf('pesan') > -1 || fullText.indexOf('beli') > -1) product = 'Stevia Product';
-        
-        console.log('[DEBUG] Product detected:', product);
         
         // Fire InitiateCheckout
         if (window.fbq) {
           console.log('[META PIXEL] ✅ FIRING InitiateCheckout:', product);
-          try {
-            window.fbq('track', 'InitiateCheckout', {
-              content_name: product,
-              content_category: 'Stevia Product',
-              currency: 'IDR'
-            });
-            console.log('[META PIXEL] ✅ SUCCESS - Event sent to Facebook');
-          } catch (err) {
-            console.error('[META PIXEL] ❌ ERROR:', err);
-          }
-        } else {
-          console.error('[META PIXEL] ❌ fbq not found!');
+          window.fbq('track', 'InitiateCheckout', {
+            content_name: product,
+            content_category: 'Stevia Product',
+            currency: 'IDR'
+          });
         }
         
-        // Open WhatsApp after delay
+        // Open WhatsApp after delay - try to get URL from React onClick
         setTimeout(function() {
           var waUrl = href;
-          if (!waUrl && onClick.indexOf('window.open') > -1) {
-            var match = onClick.match(/https?:\/\/[^\s'"]+/);
-            if (match) {
-              waUrl = match[0];
-              console.log('[DEBUG] Extracted URL from onClick:', waUrl);
-            }
+          
+          // If no href, try to extract from React's onClick by simulating click
+          if (!waUrl && el.tagName === 'BUTTON') {
+            // Common WhatsApp number for Stevia Lumajang
+            waUrl = 'https://wa.me/6281249356066?text=' + encodeURIComponent(
+              'Halo Stevia Lumajang, saya tertarik dengan produk Anda'
+            );
           }
+          
           if (waUrl) {
-            console.log('[DEBUG] Opening WhatsApp:', waUrl);
+            console.log('[META PIXEL] Opening WhatsApp:', waUrl);
             window.open(waUrl, '_blank');
           }
         }, 500);
@@ -153,11 +141,6 @@
       // Use capture phase to intercept clicks early
       document.addEventListener('click', trackWhatsAppClick, true);
       console.log('[META PIXEL] 🎯 WhatsApp tracking enabled (capture phase)');
-      
-      // Also log all clicks for debugging
-      setTimeout(function() {
-        console.log('[DEBUG] Tracking is active - click any WhatsApp button');
-      }, 1000);
     </script>
     <script type="module" crossorigin src="/assets/index-DOR7zTQ-.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-ebxGkIdf.css">

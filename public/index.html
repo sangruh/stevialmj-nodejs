@@ -57,32 +57,83 @@
 
     <!-- Meta Pixel Auto-Track WhatsApp Clicks -->
     <script>
-      // Auto-track all WhatsApp clicks as InitiateCheckout
-      document.addEventListener('click', function(e) {
-        var link = e.target.closest('a[href*="wa.me"], a[href*="whatsapp.com"], button');
-        if (link && (link.href || link.onclick)) {
+      // Wait for fbq to be ready, then setup auto-tracking
+      function setupWhatsAppTracking() {
+        // Track all clicks on WhatsApp links
+        document.addEventListener('click', function(e) {
+          // Find closest link or button
+          var target = e.target;
+          var link = null;
+          
+          // Traverse up to find link or button
+          while (target && target.tagName) {
+            if (target.tagName === 'A' && target.href) {
+              link = target;
+              break;
+            }
+            if (target.tagName === 'BUTTON') {
+              link = target;
+              break;
+            }
+            target = target.parentElement;
+          }
+          
+          if (!link) return;
+          
+          // Check if this is a WhatsApp link
           var href = link.href || '';
-          var isWhatsApp = href.indexOf('wa.me') > -1 || href.indexOf('whatsapp.com') > -1 || 
-                          (link.onclick && link.onclick.toString().indexOf('wa.me') > -1);
+          var onClickStr = link.onclick ? link.onclick.toString() : '';
+          var isWhatsApp = href.indexOf('wa.me/6281249356066') > -1 || 
+                          href.indexOf('whatsapp.com') > -1 ||
+                          onClickStr.indexOf('wa.me') > -1;
+          
           if (isWhatsApp && window.fbq) {
+            // Get button text for product name
+            var text = (link.textContent || link.innerText || '').trim();
             var productName = 'WhatsApp Inquiry';
-            var text = link.textContent || link.innerText || '';
-            if (text.indexOf('3gr') > -1 || text.indexOf('3 gr') > -1) productName = 'Stevia Tetes 3gr';
-            else if (text.indexOf('6gr') > -1 || text.indexOf('6 gr') > -1) productName = 'Stevia Tetes 6gr';
-            else if (text.indexOf('12gr') > -1 || text.indexOf('12 gr') > -1) productName = 'Stevia Tetes 12gr';
-            else if (text.indexOf('Reseller') > -1 || text.indexOf('reseller') > -1) productName = 'Paket Reseller';
-            else if (text.indexOf('Komunitas') > -1) productName = 'Gabung Komunitas';
-            else if (text.indexOf('Cek Kesehatan') > -1) productName = 'Booking Cek Kesehatan';
-            else if (text.indexOf('Pesan') > -1 || text.indexOf('Beli') > -1) productName = 'Stevia Product';
             
+            // Detect product from text
+            if (text.indexOf('3gr') > -1 || text.toLowerCase().indexOf('3 gr') > -1) {
+              productName = 'Stevia Tetes 3gr';
+            } else if (text.indexOf('6gr') > -1 || text.toLowerCase().indexOf('6 gr') > -1) {
+              productName = 'Stevia Tetes 6gr';
+            } else if (text.indexOf('12gr') > -1 || text.toLowerCase().indexOf('12 gr') > -1) {
+              productName = 'Stevia Tetes 12gr';
+            } else if (text.toLowerCase().indexOf('reseller') > -1 || text.toLowerCase().indexOf('mitra') > -1) {
+              productName = 'Paket Reseller';
+            } else if (text.toLowerCase().indexOf('komunitas') > -1 || text.toLowerCase().indexOf('kegiatan') > -1) {
+              productName = 'Gabung Komunitas';
+            } else if (text.toLowerCase().indexOf('cek kesehatan') > -1 || text.toLowerCase().indexOf('booking') > -1) {
+              productName = 'Booking Cek Kesehatan';
+            } else if (text.indexOf('Pesan') > -1 || text.indexOf('Beli') > -1 || text.indexOf('Hubungi') > -1) {
+              productName = 'Stevia Product';
+            }
+            
+            // Fire InitiateCheckout event
             window.fbq('track', 'InitiateCheckout', {
               content_name: productName,
               content_category: 'Stevia Product',
-              currency: 'IDR'
+              currency: 'IDR',
+              value: 0
             });
+            
+            console.log('[Meta Pixel] InitiateCheckout:', productName);
           }
-        }
-      }, true);
+        }, false);
+        
+        console.log('[Meta Pixel] WhatsApp tracking enabled');
+      }
+      
+      // Setup tracking when DOM is ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupWhatsAppTracking);
+      } else {
+        setupWhatsAppTracking();
+      }
+      
+      // Also setup after React loads (backup)
+      setTimeout(setupWhatsAppTracking, 1000);
+      setTimeout(setupWhatsAppTracking, 3000);
     </script>
     <script type="module" crossorigin src="/assets/index-DOR7zTQ-.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-ebxGkIdf.css">

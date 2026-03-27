@@ -59,6 +59,7 @@
 
     <!-- Meta Pixel WhatsApp Tracking - InitiateCheckout ONLY -->
     <script>
+      // ===== WHATSAPP CLICK TRACKING =====
       function trackWhatsAppClick(e) {
         var el = e.target;
         
@@ -141,6 +142,66 @@
       // Use capture phase to intercept clicks early
       document.addEventListener('click', trackWhatsAppClick, true);
       console.log('[META PIXEL] 🎯 WhatsApp tracking enabled (capture phase)');
+      
+      // ===== SCROLL TRACKING =====
+      var scrollTracked = false;
+      var scrollTimeout;
+      
+      function trackScroll() {
+        var scrollPercent = Math.round((window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100);
+        
+        // Track at 25%, 50%, 75%, 90%
+        if (scrollPercent >= 25 && scrollPercent < 50 && !window.scroll25) {
+          window.scroll25 = true;
+          if (window.fbq) {
+            window.fbq('track', 'ViewContent', {
+              content_name: 'Scroll 25%',
+              content_category: 'Engagement'
+            });
+            console.log('[META PIXEL] 📜 Scroll 25%');
+          }
+        }
+        if (scrollPercent >= 50 && scrollPercent < 75 && !window.scroll50) {
+          window.scroll50 = true;
+          if (window.fbq) {
+            window.fbq('track', 'ViewContent', {
+              content_name: 'Scroll 50%',
+              content_category: 'Engagement'
+            });
+            console.log('[META PIXEL] 📜 Scroll 50%');
+          }
+        }
+        if (scrollPercent >= 75 && scrollPercent < 90 && !window.scroll75) {
+          window.scroll75 = true;
+          if (window.fbq) {
+            window.fbq('track', 'ViewContent', {
+              content_name: 'Scroll 75%',
+              content_category: 'Engagement'
+            });
+            console.log('[META PIXEL] 📜 Scroll 75%');
+          }
+        }
+        if (scrollPercent >= 90 && !window.scroll90) {
+          window.scroll90 = true;
+          if (window.fbq) {
+            window.fbq('track', 'ViewContent', {
+              content_name: 'Scroll 90%',
+              content_category: 'Engagement'
+            });
+            console.log('[META PIXEL] 📜 Scroll 90% - Page Almost Complete!');
+          }
+        }
+      }
+      
+      // Throttle scroll events
+      window.addEventListener('scroll', function() {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(trackScroll, 200);
+      });
+      
+      // Initial check after page load
+      setTimeout(trackScroll, 2000);
+      console.log('[META PIXEL] 📜 Scroll tracking enabled');
     </script>
     <script type="module" crossorigin src="/assets/index-DOR7zTQ-.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-ebxGkIdf.css">

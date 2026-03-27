@@ -102,31 +102,56 @@
         
         // Detect product from text
         var product = 'WhatsApp Inquiry';
-        if (fullText.indexOf('3gr') > -1) product = 'Stevia Tetes 3gr';
-        else if (fullText.indexOf('6gr') > -1) product = 'Stevia Tetes 6gr';
-        else if (fullText.indexOf('12gr') > -1) product = 'Stevia Tetes 12gr';
-        else if (fullText.indexOf('reseller') > -1 || fullText.indexOf('mitra') > -1) product = 'Paket Reseller';
-        else if (fullText.indexOf('komunitas') > -1 || fullText.indexOf('kegiatan') > -1) product = 'Gabung Komunitas';
-        else if (fullText.indexOf('kesehatan') > -1 || fullText.indexOf('booking') > -1) product = 'Booking Cek Kesehatan';
-        else if (fullText.indexOf('pesan') > -1 || fullText.indexOf('beli') > -1) product = 'Stevia Product';
+        var eventType = 'InitiateCheckout'; // Default
         
-        // Fire InitiateCheckout
+        if (fullText.indexOf('3gr') > -1) {
+          product = 'Stevia Tetes 3gr';
+          eventType = 'AddToCart'; // Product-specific interest
+        }
+        else if (fullText.indexOf('6gr') > -1) {
+          product = 'Stevia Tetes 6gr';
+          eventType = 'AddToCart';
+        }
+        else if (fullText.indexOf('12gr') > -1) {
+          product = 'Stevia Tetes 12gr';
+          eventType = 'AddToCart';
+        }
+        else if (fullText.indexOf('reseller') > -1 || fullText.indexOf('mitra') > -1) {
+          product = 'Paket Reseller';
+          eventType = 'AddToCart';
+        }
+        else if (fullText.indexOf('komunitas') > -1 || fullText.indexOf('kegiatan') > -1) {
+          product = 'Gabung Komunitas';
+          eventType = 'Lead'; // Community interest
+        }
+        else if (fullText.indexOf('kesehatan') > -1 || fullText.indexOf('booking') > -1) {
+          product = 'Booking Cek Kesehatan';
+          eventType = 'Contact'; // Service inquiry
+        }
+        else if (fullText.indexOf('pesan') > -1 || fullText.indexOf('beli') > -1) {
+          product = 'Stevia Product';
+          eventType = 'AddToCart';
+        }
+        else if (fullText.indexOf('hubungi') > -1 || fullText.indexOf('tanya') > -1) {
+          product = 'Inquiry';
+          eventType = 'Lead';
+        }
+        
+        // Fire event
         if (window.fbq) {
-          console.log('[META PIXEL] ✅ FIRING InitiateCheckout:', product);
-          window.fbq('track', 'InitiateCheckout', {
+          console.log('[META PIXEL] ✅ FIRING', eventType + ':', product);
+          window.fbq('track', eventType, {
             content_name: product,
             content_category: 'Stevia Product',
             currency: 'IDR'
           });
         }
         
-        // Open WhatsApp after delay - try to get URL from React onClick
+        // Open WhatsApp after delay
         setTimeout(function() {
           var waUrl = href;
           
-          // If no href, try to extract from React's onClick by simulating click
           if (!waUrl && el.tagName === 'BUTTON') {
-            // Common WhatsApp number for Stevia Lumajang
             waUrl = 'https://wa.me/6281249356066?text=' + encodeURIComponent(
               'Halo Stevia Lumajang, saya tertarik dengan produk Anda'
             );
@@ -144,7 +169,6 @@
       console.log('[META PIXEL] 🎯 WhatsApp tracking enabled (capture phase)');
       
       // ===== SCROLL TRACKING =====
-      var scrollTracked = false;
       var scrollTimeout;
       
       function trackScroll() {
@@ -202,6 +226,126 @@
       // Initial check after page load
       setTimeout(trackScroll, 2000);
       console.log('[META PIXEL] 📜 Scroll tracking enabled');
+      
+      // ===== TIME ON PAGE TRACKING =====
+      var timeTracking = {
+        tracked30: false,
+        tracked60: false,
+        tracked120: false
+      };
+      
+      function trackTimeOnPage() {
+        var timeOnPage = Math.round((Date.now() - pageLoadTime) / 1000);
+        
+        // Track at 30 seconds (minimum interest)
+        if (timeOnPage >= 30 && !timeTracking.tracked30) {
+          timeTracking.tracked30 = true;
+          if (window.fbq) {
+            window.fbq('track', 'ViewContent', {
+              content_name: 'Time 30s',
+              content_category: 'Engagement'
+            });
+            console.log('[META PIXEL] ⏱️ Time on Page: 30 seconds');
+          }
+        }
+        
+        // Track at 60 seconds (serious interest)
+        if (timeOnPage >= 60 && !timeTracking.tracked60) {
+          timeTracking.tracked60 = true;
+          if (window.fbq) {
+            window.fbq('track', 'ViewContent', {
+              content_name: 'Time 60s',
+              content_category: 'Engagement'
+            });
+            console.log('[META PIXEL] ⏱️ Time on Page: 60 seconds - Serious Interest!');
+          }
+        }
+        
+        // Track at 120 seconds (very interested)
+        if (timeOnPage >= 120 && !timeTracking.tracked120) {
+          timeTracking.tracked120 = true;
+          if (window.fbq) {
+            window.fbq('track', 'ViewContent', {
+              content_name: 'Time 120s',
+              content_category: 'Engagement'
+            });
+            console.log('[META PIXEL] ⏱️ Time on Page: 120 seconds - Very Interested!');
+          }
+        }
+      }
+      
+      var pageLoadTime = Date.now();
+      
+      // Check every 10 seconds
+      setInterval(trackTimeOnPage, 10000);
+      console.log('[META PIXEL] ⏱️ Time on page tracking enabled');
+      
+      // ===== SECTION VIEW TRACKING =====
+      var sectionTracking = {
+        products: false,
+        kegiatan: false,
+        faq: false
+      };
+      
+      function trackSectionViews() {
+        // Check if Products section is visible
+        var productsSection = document.getElementById('products');
+        if (productsSection && !sectionTracking.products) {
+          var rect = productsSection.getBoundingClientRect();
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            sectionTracking.products = true;
+            if (window.fbq) {
+              window.fbq('track', 'ViewContent', {
+                content_name: 'Products Section',
+                content_category: 'Page Section'
+              });
+              console.log('[META PIXEL] 👁️ Products Section Viewed');
+            }
+          }
+        }
+        
+        // Check if Kegiatan section is visible
+        var kegiatanSection = document.getElementById('kegiatan');
+        if (kegiatanSection && !sectionTracking.kegiatan) {
+          var rect = kegiatanSection.getBoundingClientRect();
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            sectionTracking.kegiatan = true;
+            if (window.fbq) {
+              window.fbq('track', 'ViewContent', {
+                content_name: 'Kegiatan Section',
+                content_category: 'Page Section'
+              });
+              console.log('[META PIXEL] 👁️ Kegiatan Section Viewed');
+            }
+          }
+        }
+        
+        // Check if FAQ section is visible
+        var faqSection = document.getElementById('faq');
+        if (faqSection && !sectionTracking.faq) {
+          var rect = faqSection.getBoundingClientRect();
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            sectionTracking.faq = true;
+            if (window.fbq) {
+              window.fbq('track', 'ViewContent', {
+                content_name: 'FAQ Section',
+                content_category: 'Page Section'
+              });
+              console.log('[META PIXEL] 👁️ FAQ Section Viewed');
+            }
+          }
+        }
+      }
+      
+      // Check section visibility on scroll
+      window.addEventListener('scroll', function() {
+        clearTimeout(window.sectionTimeout);
+        window.sectionTimeout = setTimeout(trackSectionViews, 300);
+      });
+      
+      // Initial check
+      setTimeout(trackSectionViews, 3000);
+      console.log('[META PIXEL] 👁️ Section view tracking enabled');
     </script>
     <script type="module" crossorigin src="/assets/index-DOR7zTQ-.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-ebxGkIdf.css">
